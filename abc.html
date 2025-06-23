@@ -1,0 +1,207 @@
+<html>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .form-container, .voucher {
+            width: 750px;
+            margin: auto;
+            border: 1px solid black;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2, h4, p, h3 {
+            text-align: center;
+            margin: 0;
+        }
+
+        .input-row {
+            margin-top: 15px;
+            clear: both;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+        }
+
+        input[type="text"], input[type="date"], textarea {
+            width: 500px;
+            border: none;
+            border-bottom: 1px solid black;
+        }
+
+        .header-right {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            text-align: right;
+        }
+
+        .header-right input[type="text"], .header-right input[type="date"] {
+            width: 150px;
+        }
+
+        .bill-box {
+            border: 1px solid black;
+            width: 200px;
+            height: 100px;
+            padding: 5px;
+            float: right;
+            margin-top: 80px;
+        }
+
+        .signatures {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .signature {
+            width: 30%;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 20px;
+        }
+
+        .voucher {
+            display: none;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .form-container {
+                display: none;
+            }
+
+            .voucher {
+                display: block !important;
+                border: none;
+                width: 100%;
+                padding: 20px;
+                page-break-after: avoid;
+            }
+
+            button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body><br><br><br>
+
+<h2>THE JYOTHI SEVA SOCIETY OF BANGALORE</h2>
+<h4>Reg. No. 164:2003-04</h4>
+<p>Jyothi Sadan, P. B. No. 3417, 8th Main, 3rd Block, Koramangala, Bengaluru - 560 034</p>
+<h3>PAYMENT VOUCHER</h3><br>
+
+<div class="form-container" id="form-container">
+    <div class="header-right">
+        <label>Date:</label>
+        <input type="date" id="date">
+    </div>
+
+    <div class="bill-box">
+        <strong>Bill details:</strong>
+        <textarea id="bill_details" rows="4" cols="15"></textarea>
+    </div>
+
+    <div class="input-row">
+        <label>Paid to:</label>
+        <input type="text" id="paid_to">
+    </div>
+
+    <div class="input-row">
+        <label>Being:</label>
+        <textarea id="being" rows="3" cols="40"></textarea>
+    </div>
+
+    <div class="input-row">
+        <label>Account Head:</label>
+        <input type="text" id="account_head">
+    </div>
+
+    <div class="input-row">
+        <label>Amount in words:</label>
+        <textarea id="amount_words" rows="2" cols="30"></textarea>
+    </div>
+
+    <div class="input-row">
+        <label>Cash/DD/Cheque No.:</label>
+        <input type="text" id="cheque_no">
+    </div>
+
+    <div class="input-row">
+        <label>Rs.:</label>
+        <input type="text" id="amount">
+    </div>
+
+    <div class="signatures">
+        <div class="signature">Authorized</div>
+        <div class="signature">Checked</div>
+        <div class="signature">Receiver's Signature</div>
+    </div>
+
+    <button onclick="generateVoucher()">Generate & Print Voucher</button>
+</div>
+
+<div class="voucher" id="voucher">
+    <div class="header-right">
+        <strong>Date:</strong> <span id="print-date"></span>
+    </div>
+
+    <div class="bill-box" id="print-bill-box"></div>
+
+    <div class="input-row"><strong>Paid to:</strong> <span id="print-paid_to"></span></div>
+    <div class="input-row"><strong>Being:</strong> <span id="print-being"></span></div>
+    <div class="input-row"><strong>Account Head:</strong> <span id="print-account_head"></span></div>
+    <div class="input-row"><strong>Amount in words:</strong> <span id="print-amount_words"></span></div>
+    <div class="input-row"><strong>Cash/DD/Cheque No.:</strong> <span id="print-cheque_no"></span></div>
+    <div class="input-row"><strong>Rs.:</strong> <span id="print-amount"></span></div>
+
+    <div class="signatures"><br><br>
+        <div class="signature">Authorized</div>
+        <div class="signature">Checked</div>
+        <div class="signature">Receiver's Signature</div>
+    </div>
+</div>
+
+<script>
+    function generateVoucher() {
+        document.getElementById("print-date").innerText = document.getElementById("date").value;
+        document.getElementById("print-paid_to").innerText = document.getElementById("paid_to").value;
+        document.getElementById("print-being").innerText = document.getElementById("being").value;
+        document.getElementById("print-account_head").innerText = document.getElementById("account_head").value;
+        document.getElementById("print-amount_words").innerText = document.getElementById("amount_words").value;
+        document.getElementById("print-cheque_no").innerText = document.getElementById("cheque_no").value;
+        document.getElementById("print-amount").innerText = document.getElementById("amount").value;
+
+        const billText = document.getElementById("bill_details").value.replace(/\n/g, "<br>");
+        document.getElementById("print-bill-box").innerHTML = `<strong>Bill details:</strong>${billText}`;
+
+        document.getElementById("voucher").style.display = "block";
+
+        window.print();
+
+        document.getElementById("voucher").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
